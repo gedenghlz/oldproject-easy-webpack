@@ -1,34 +1,4 @@
-# multipage-start-kit 
-  
-[![Build Status](https://travis-ci.org/alanshaw/david-www.svg?branch=master)](https://travis-ci.org/alanshaw/david-www)    
 
-基于 Webpack 开发和构建 传统多页面静态站点的前端工程化方案，支持ie8+
-同时适用于 PC 端和移动端。
-
-## Requirements
-* node `^5.0.0`
-* yarn `^0.23.0` or npm `^3.0.0`
-
-## 功能
-- ES6语法支持
-- IE8兼容
-- 前端工程化
-- 支持响应式
-- 模块化
-- 组件化
-- 开发、调试和构建
-- 集成 PostCSS、Sass
-
-## Installation 安装
-
-```bash
-$ https://github.com/HuaRongSAO/multipage-start-kit <my-project-name>
-$ cd <my-project-name>
-$ npm i
-$ npm start //开始开发和调试
-$ npm run build //压缩打包
-$ npm run server //发布运行本地服务器
-```
 ## 全局补丁
 ## 添加 polyfill
 按需引入 polyfill，提高浏览器兼容性。
