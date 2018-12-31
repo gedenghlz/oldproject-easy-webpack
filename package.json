@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "split":"cross-env NODE_ENV=production  webpack --config  build/webpack.config.split.js  --progress",
     "start": "clear && cross-env NODE_ENV=development webpack-dashboard  babel-node build/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production  webpack --config build/webpack.config.production.js --progress",
     "server": "npm run build && babel-node bin/server "

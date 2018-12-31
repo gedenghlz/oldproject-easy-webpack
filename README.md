@@ -82,7 +82,8 @@ $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 │   ├── tool  #封装的小工具（获取文件，log）    
 │   │   ├── getFile.js   
 │   │   ├── logger.js   
-│   │   └── watchDirs.js   
+│   │   └── watchDirs.js 
+│   ├── webpack.config.split.js  #  一键拆分文件 
 │   ├── webpack.config.base.js  #  webpack基础配置  
 │   ├── webpack.config.dev.js  #  webpack 开发模式基础配置   
 │   └── webpack.config.production.js  #  webpack 生产模式基础配置     
