@@ -2,6 +2,8 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path')
+const es3ifyPlugin = require('es3ify-webpack-plugin');
+
 
 
 const PATH = require('./filePath')
@@ -22,12 +24,11 @@ let config = {
     entry: Object.assign(pathConfig.entries, {
         'vendor': [
             path.join(PATH.POLYFILL),
-            PATH.CSSIMPORT
         ],
     }),
     output: Object.assign({
         filename: '[name]/[chunkhash:8].js',
-        publicPath: 'PATH.publicPath'
+        publicPath: PATH.publicPath
     }),
     module: {
         rules: []
@@ -43,7 +44,7 @@ let config = {
         new webpack.ProvidePlugin({
             $: 'jquery-compat' //兼容ie8的jQuery版本	
         })
-    ].concat(html_plugins(PATH.FAVICON))
+    ].concat(html_plugins())
 }
 
 
@@ -113,7 +114,7 @@ config.module.rules.push({
 // ------------------------------------
 
 const extractStyles = new ExtractTextPlugin({
-    filename: 'style/[name].[contenthash:8].css',
+    filename: '[name]/[contenthash:8].css',
     allChunks: false,
     disable: false,
 })
@@ -165,6 +166,7 @@ config.module.rules.push({
 
 
 config.plugins.push(extractStyles)
+config.plugins.push(new es3ifyPlugin())
 // Fonts
 // ------------------------------------
 ;

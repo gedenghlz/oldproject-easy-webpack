@@ -87,8 +87,8 @@ $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 │   ├── webpack.config.base.js  #  webpack基础配置  
 │   ├── webpack.config.dev.js  #  webpack 开发模式基础配置   
 │   └── webpack.config.production.js  #  webpack 生产模式基础配置     
-├── dist  # 输出文件夹   
 ├── package.json  
+├── setting.js  #  项目设置（端口）     
 ├── README.md    
 ├── src  #  根路径     
 │   ├── data  #  静态数据      
@@ -107,7 +107,6 @@ $breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
 │   │   │   └── PcHead.ejs    # pc方案     
 │   │   └── polyfill     
 │   │       └── polyfill.ejs   # html5  shim    
-│   ├── setting.js  #  项目设置（端口）     
 │   ├── style  #  样式    
 │   │   ├── app.scss  #  全局样式入口     
 │   │   ├── base  #  样式工具模块    

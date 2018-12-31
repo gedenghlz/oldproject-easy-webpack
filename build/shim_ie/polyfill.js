@@ -15,6 +15,10 @@
 // defer to `object-assign`. If our Object.assign implementation is correct
 // (determined by `object-assign` internally) the polyfill will be discarded
 // and the native implementation used.
+import 'es5-shim';
+import 'es5-shim/es5-sham';
+import 'console-polyfill';
+import './json3.min.js';
 
 Object.assign = require('object-assign')
 
@@ -23,6 +27,7 @@ Object.assign = require('object-assign')
 if (typeof Promise === 'undefined') {
     require('promise/lib/rejection-tracking').enable()
     window.Promise = require('promise/lib/es6-extensions.js')
+
 }
 
 // 3) Fetch

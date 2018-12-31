@@ -5,10 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "clear && cross-env NODE_ENV=development webpack-dashboard  babel-node build/webpack.config.dev.js",
-    "build": "cross-env NODE_ENV=production  webpack --config build/webpack.config.production.js --progress",
-    "server": "npm run build && babel-node bin/server "
+    "build": "cross-env NODE_ENV=production  webpack --config build/webpack.config.production.js --progress"
   },
-  "author": "HuaRongSAO",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "art-template-loader": "^1.4.3",
@@ -38,6 +37,7 @@
     "pm2": "^2.6.1",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
+    "uglifyjs-webpack-plugin": "^2.1.1",
     "url-loader": "^0.5.9",
     "watch": "^1.0.2",
     "webpack": "^3.5.3",
@@ -48,11 +48,15 @@
   "dependencies": {
     "art-template": "^4.13.2",
     "compression": "^1.7.0",
+    "console-polyfill": "^0.3.0",
+    "es6-promise": "^4.2.4",
     "express": "^4.15.4",
+    "es5-shim": "^4.5.9",
     "jquery-compat": "^3.0.0-alpha1",
     "lodash": "^4.17.4",
     "object-assign": "^4.1.1",
     "promise": "^8.0.1",
-    "whatwg-fetch": "^2.0.3"
+    "whatwg-fetch": "^2.0.3",
+    "es3ify-webpack-plugin": "^0.0.1"
   }
 }

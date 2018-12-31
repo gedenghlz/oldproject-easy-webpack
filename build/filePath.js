@@ -6,30 +6,24 @@ const LAN = ip.address()
 
 const ROOT = path.resolve(__dirname, './../')
 const SRC = path.join(ROOT, 'src')
-const JAVASCRIPT = path.resolve(SRC, 'javascript/')
 const HTML = path.resolve(SRC, 'html/')
-const LAYOUT = path.resolve(SRC, 'layout')
 const STYLE = path.resolve(SRC, 'style')
-const DIST = path.join(ROOT, "../")
 const STATIC = path.join(ROOT, "static")
-const JS = path.join(DIST, "js")
 const VIEW = path.resolve(SRC, 'view')
 
 const PUBLICPATH = '/'
-const FAVICON = path.resolve(ROOT, 'static/favicon.ico')
-const POLYFILL = path.resolve(JAVASCRIPT, 'polyfill.js')
+const FAVICON = path.resolve(ROOT, '')
+const POLYFILL = path.resolve(ROOT, 'build/shim_ie/polyfill.js')
 const CSSIMPORT = path.resolve(STYLE, 'style')
+const VENDOR = path.join(ROOT, 'vendor')
 
 
 module.exports = {
+    VENDOR,
     ROOT,
     SRC,
-    JAVASCRIPT,
     HTML,
     FAVICON,
-    DIST,
-    JS,
-    LAYOUT,
     STYLE,
     STATIC,
     PUBLICPATH,

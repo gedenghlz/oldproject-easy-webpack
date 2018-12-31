@@ -28,9 +28,9 @@ function fileDisplay(filePath) {
         let stats = fs.statSync(filedir)
         let isDir = stats.isDirectory(); //是文件夹
         if (isDir) {
-            if (filedir.indexOf('_dev') > 0) {
+            if (filedir.indexOf('_entries') > 0) {
                 devPaths.push(filedir);
-                distPaths.push(filedir.replace('_dev','_dist'));
+                distPaths.push(filedir.replace('_entries','_dist'));
 
             } else {
                 fileDisplay(filedir); //递归，如果是文件夹，就继续遍历该文件夹下面的文件
@@ -54,6 +54,6 @@ function fileDisplay(filePath) {
 //     }
 // }
 
-console.log(devPaths,888)
+console.log(distPaths,888)
 
 module.exports ={distPaths,devPaths};

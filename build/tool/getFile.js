@@ -2,6 +2,8 @@ const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const devPaths = require('./getDevPath.js').devPaths;
 
+const PATH = require('../filePath.js');
+
 
 function getEntriesAndOutputs() {
     var entries = {};
@@ -9,7 +11,7 @@ function getEntriesAndOutputs() {
         var entryFiles = glob.sync(entryJsPath + '/**/*.js');
         for (var i = 0; i < entryFiles.length; i++) {
             var filePath = entryFiles[i];
-            var filename = filePath.substring(0,filePath.lastIndexOf('\/')).split('oldproject-easy-webpack/')[1].replace('_dev','_dist');
+            var filename = filePath.substring(0,filePath.lastIndexOf('\/')).replace(PATH.ROOT+'/','').replace('_entries','_dist');
             entries[filename] = filePath;
         }
     })
@@ -18,23 +20,18 @@ function getEntriesAndOutputs() {
     }
 }
 
-let a = getEntriesAndOutputs();
-console.log(a)
-
-
-function html_plugins(faviconPath) {
+function html_plugins() {
     var entriesFiles = getEntriesAndOutputs().entries
     var htmlPluginItems = []
     devPaths.forEach((viewPAth, index) => {
         var entryHtml = glob.sync(viewPAth + '/**/*.html')
         for (var i = 0; i < entryHtml.length; i++) {
             var filePath = entryHtml[i]
-            var filename = filePath.substring(0,filePath.lastIndexOf('\/')+1).split('oldproject-easy-webpack/')[1].replace('_dev','_dist');
+            var filename = filePath.substring(0,filePath.lastIndexOf('\/')+1).replace(PATH.ROOT+'/','').replace('_entries','_dist');
             var name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
             var conf = {
                 template: filePath,
                 filename: filename + name+'.html',
-                favicon: faviconPath,
                 hash: false, // 为静态资源生成hash值
                 minify: {
                     removeComments: true, //移除HTML中的注释

@@ -1,13 +1,10 @@
-console.log(9798798)
-
-
 const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 const PATH = require('./filePath')
-const setting = require('./../src/setting.js')
+const setting = require('./../setting.js')
 let webpackConfig = require('./webpack.config.base')
 const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
