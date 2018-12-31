@@ -1,10 +1,13 @@
+console.log(9798798)
+
+
 const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 
 const PATH = require('./filePath')
-const setting = require('./../src/webpackConfig/setting')
+const setting = require('./../src/setting.js')
 let webpackConfig = require('./webpack.config.base')
 const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
@@ -14,10 +17,10 @@ webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
 
 webpackConfig.devtool = 'source-map'
 
-// webpackConfig.plugins.push(new DashboardPlugin({
-    // color: true,
-    // title: 'Webpack Dash'
-// }))
+webpackConfig.plugins.push(new DashboardPlugin({
+    color: true,
+    title: 'Webpack Dash'
+}))
 
 
 webpackConfig.plugins.push(

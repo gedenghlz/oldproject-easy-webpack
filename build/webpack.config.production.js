@@ -4,17 +4,35 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 let webpackConfig = require('./webpack.config.base')
 const PATH = require('./filePath')
+const distPaths = require('./getDevPath.js').distPaths;
 
-webpackConfig.plugins.unshift(
-    new CleanWebpackPlugin([PATH
-        .DIST
-    ], {
-        root: PATH.PUBLICPATH,
-        verbose: true,
-        dry: false,
-        exclude: ['webSrc']
-    })
-)
+distPaths.forEach(dir=>{
+    webpackConfig.plugins.unshift(
+        new CleanWebpackPlugin([dir
+        ], {
+            root: PATH.PUBLICPATH,
+            verbose: true,
+            dry: false,
+            exclude: []
+        })
+    )
+
+})
+
+
+// webpackConfig.plugins.unshift(
+    // new CleanWebpackPlugin([PATH
+    //     .DIST
+    // ], {
+    //     root: PATH.PUBLICPATH,
+    //     verbose: true,
+    //     dry: false,
+    //     exclude: ['webSrc']
+    // })
+// )
+
+
+
 
 
 webpackConfig.plugins.push(

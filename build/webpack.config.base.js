@@ -6,28 +6,29 @@ const path = require('path')
 
 const PATH = require('./filePath')
 const {
-    entries,
+    getEntriesAndOutputs,
     html_plugins
 } = require('./tool/getFile')
 
-const copyFileConfig = require('./tool/copyFile').copyFileConfig;
+const pathConfig = getEntriesAndOutputs();
+
+// const copyFileConfig = require('./tool/copyFile').copyFileConfig;
 
 const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const __DEV__ = NODE_ENV === 'development'
 
 let config = {
-    entry: Object.assign(entries(PATH.VIEW), {
+    entry: Object.assign(pathConfig.entries, {
         'vendor': [
             path.join(PATH.POLYFILL),
             PATH.CSSIMPORT
         ],
     }),
-    output: {
-        path: PATH.DIST,
-        filename: "js/[name].[chunkhash:8].js",
-        publicPath: PATH.PUBLICPATH
-    },
+    output: Object.assign({
+        filename: '[name]/[chunkhash:8].js',
+        publicPath: 'PATH.publicPath'
+    }),
     module: {
         rules: []
     },
@@ -42,10 +43,9 @@ let config = {
         new webpack.ProvidePlugin({
             $: 'jquery-compat' //兼容ie8的jQuery版本	
         })
-    ].concat(html_plugins(PATH.VIEW, PATH.FAVICON))
+    ].concat(html_plugins(PATH.FAVICON))
 }
 
-console.log(config)
 
 config.module.rules.push({
     test: /\.(js|jsx)$/,
@@ -159,9 +159,9 @@ config.module.rules.push({
 
 
 
-config.plugins.push(
-    new CopyWebpackPlugin(copyFileConfig)
-)
+// config.plugins.push(
+//     new CopyWebpackPlugin(copyFileConfig)
+// )
 
 
 config.plugins.push(extractStyles)

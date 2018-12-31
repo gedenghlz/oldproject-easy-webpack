@@ -3,10 +3,11 @@ let path = require('path');
 const PATH = require('./../filePath')
 
 //解析需要遍历的文件夹
-let filePath = path.resolve(PATH.SRC);
+let filePath = path.resolve(PATH.ROOT);
 
-let copyFileConfig = [];
-let packFileConfig = [];
+let devPaths = [];
+let distPaths = [];
+// let packFileConfig = [];
 
 
 //调用文件遍历方法
@@ -25,31 +26,34 @@ function fileDisplay(filePath) {
         let filedir = path.join(filePath, filename);
         //根据文件路径获取文件信息，返回一个fs.Stats对象
         let stats = fs.statSync(filedir)
-        let isFile = stats.isFile(); //是文件
         let isDir = stats.isDirectory(); //是文件夹
-        if (isFile) {
-            let pathStr =
-                filedir.split('webSrc/')[1];
-            if (pathStr.indexOf('_unPack') === -1 && pathStr.indexOf('_tP') === -1) {
-                copyFileConfig.push({
-                    from: filedir,
-                    to: filedir.replace('webSrc/src/', ''),
-                    force: true
-                })
-            } else if (pathStr.indexOf('_tP') > -1) {
-                packFileConfig.push(filedir);
-            }
-        }
         if (isDir) {
-            let str = filedir.split('webSrc')[1];
-            if (str.indexOf('_unPack') === -1) {
+            if (filedir.indexOf('_dev') > 0) {
+                devPaths.push(filedir);
+                distPaths.push(filedir.replace('_dev','_dist'));
+
+            } else {
                 fileDisplay(filedir); //递归，如果是文件夹，就继续遍历该文件夹下面的文件
             }
-
         }
     })
 }
 
 
+// if (isFile) {
+//     let pathStr =
+//         filedir.split('webSrc/')[1];
+//     if (pathStr.indexOf('_unPack') === -1 && pathStr.indexOf('_tP') === -1) {
+//         copyFileConfig.push({
+//             from: filedir,
+//             to: filedir.replace('webSrc/src/', ''),
+//             force: true
+//         })
+//     } else if (pathStr.indexOf('_tP') > -1) {
+//         packFileConfig.push(filedir);
+//     }
+// }
 
-module.exports = {copyFileConfig,packFileConfig};
+console.log(devPaths,888)
+
+module.exports ={distPaths,devPaths};
