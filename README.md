@@ -1,132 +1,65 @@
 
-## 全局补丁
-## 添加 polyfill
-按需引入 polyfill，提高浏览器兼容性。
-polyfill 在 `/src/javascript/polyfill.js` 文件中引入：
-```js
-// 1) Object.assign
-Object.assign = require('object-assign')
 
-// 2) Promise
-if (typeof Promise === 'undefined') {
-    require('promise/lib/rejection-tracking').enable()
-    window.Promise = require('promise/lib/es6-extensions.js')
-}
-
-// 3) Fetch
-// ------------------------------------
-// Fetch polyfill depends on a Promise implementation, so it must come after
-// the feature check / polyfill above.
-if (typeof window.fetch === 'undefined') {
-    require('whatwg-fetch')
-}
-// 3) 第三方工具库
-if (typeof window._ === 'undefined') {
-    require('lodash')
-}
+# 需打包的文件夹及文件命名规范
+下面是一个例子：
+```shell
+├── src_entries  #需要打包的文件夹需要以'_entries'结尾命名，且建议一个项目或者一个子系统中只定义一个
+    └── home #接下来是页面的文件夹
+    │    ├── home.js   #页面home的入口js
+    │    └── home.html #页面home的html,将自动将打包的后的js添加到页面 
+    └── about 
+         ├── about.js   
+         └── about.html 
 ```
+经过以上配置的js为整个页面的入口js文件，其他被其引用的文件不需要且严禁一同放入此目录，其他文件放置目录可自己合理定义，不影响打包，webpack会自动找到以上文件夹和文件进行打包，打包后src_entries同级目录下会自动生成一个src_dist目录，打包后的文件目录结构不变。
 
-## 样式编写规范
-请参照 BEM 规范，详情见：[https://github.com/zhaotoday/bem](https://github.com/zhaotoday/bem)，下面是一个例子：  
-HTML 代码：
-```html
-<nav class="nav">
-  <a href="#" class="nav__item nav__item--normal">正常状态</a>
-  <a href="#" class="nav__item nav__item--active">当前状态</a>
-  <a href="#" class="nav__item nav__item--hover">鼠标移上时的状态</a>
-</nav>
-```
-Sass 代码：
-```scss
-.nav {
-  &__item {
-    &--normal {
-    }
-    &--active {
-    }
-    &--hover {
-    }
-  }
-}
-```
-## 响应式开发
- ```npm i -D include-media```
-```scss
-@import "~include-media/dist/_include-media.scss";
 
-$breakpoints: (phone: 320px, tablet: 768px, desktop: 1024px);
+# 模块化的使用
+项目采用es6模块进行模块化开发，es6模块使用可以参照：https://github.com/simplexcspp/JavaScript-Module/issues/2
 
-.selector {
-  @include media("<=tablet") {
-    background-color: red;
-  }
 
-  @include media(">tablet", "<desktop") {
-    background-color: yellow;
-  }
+#模板引擎的使用
 
-  @include media(">=desktop") {
-    background-color: green;
-  }
-}
-```
+
+
+
+#ajax的使用
+
+
+
+#开发环境下设置代理解决跨域
+
+
+
+
+#miniui的嵌入
+
+
+
+
+
+
 
 # 目录结构
 ```shell
 
 
-├── bin  #服务器配置文件夹    
-│   └── server.js  #express #服务器实例配置     
 ├── build  #webpack配置文件夹    
 │   ├── filePath.js  #文件路径   
 │   ├── tool  #封装的小工具（获取文件，log）    
 │   │   ├── getFile.js   
-│   │   ├── logger.js   
-│   │   └── watchDirs.js 
-│   ├── webpack.config.split.js  #  一键拆分文件 
+│   │   ├── getDevPath.js   # 获取所有入口文件所在的路径
+│   │   └── logger.js 
+│   ├──shim-ie #兼容ie的处理文件
+│   │   ├── json3.min.js   
+│   │   └── polyfill.js 
 │   ├── webpack.config.base.js  #  webpack基础配置  
 │   ├── webpack.config.dev.js  #  webpack 开发模式基础配置   
 │   └── webpack.config.production.js  #  webpack 生产模式基础配置     
 ├── package.json  
 ├── setting.js  #  项目设置（端口）     
-├── README.md    
-├── src  #  根路径     
-│   ├── data  #  静态数据      
-│   │   └── data.json   
-│   ├── image  #  静态图片   
-│   │   ├── logo.png   
-│   │   └── p.jpg   
-│   ├── javascript  #  js模块  
-│   │   ├── lib  #  js库文件      
-│   │   │   └── normalize.js      
-│   │   ├── polyfill.js  # pilyfill 文件      
-│   │   └── vendor  # vendor 文件    
-│   │       └── vendor.js   
-│   ├── layout   # html模板文件   
-│   │   ├── head   # html模板文件 组件   
-│   │   │   └── PcHead.ejs    # pc方案     
-│   │   └── polyfill     
-│   │       └── polyfill.ejs   # html5  shim    
-│   ├── style  #  样式    
-│   │   ├── app.scss  #  全局样式入口     
-│   │   ├── base  #  样式工具模块    
-│   │   │   ├── _base.scss   #  基础样式工具模块     
-│   │   │   ├── _color.scss  #  颜色工具模块     
-│   │   │   ├── _fn.scss     #  方法工具模块     
-│   │   │   ├── _mixin.scss  #  mixin工具模块     
-│   │   │   └── _reset.scss  #  reset样式工具模块     
-│   │   ├── style.js   #  webpack 样式入口（！单一css输出设置）  
-│   │   └── utill.scss  #  样式工具模块出口         
-│   └── view  #  单页面文件夹       
-│       ├── home  #  页面文件夹   
-│           ├── home.html  #  html文件     
-│           ├── home.js    #  js文件   
-│           ├── home.scss  #  scss文件 需要import到app.css  
-│           └── asset  #  静态资源   
-│                └── bg.jpg  
-│    
-└── static   
-    ├── favicon.ico   
-    └── readme.md   
+├── README.md   
+├── .gitignore #git提交忽略文件    
+└── vendor # 公用js打包地址
 
 ```
