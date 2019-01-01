@@ -1,7 +1,7 @@
 
 
 # 需打包的文件夹及文件命名规范
-下面是一个例子：
+## 下面是一个例子：
 ```shell
 ├── src_entries  #需要打包的文件夹需要以'_entries'结尾命名，且建议一个项目或者一个子系统中只定义一个
     └── home #接下来是页面的文件夹
@@ -11,28 +11,118 @@
          ├── about.js   
          └── about.html 
 ```
-经过以上配置的js为整个页面的入口js文件，其他被其引用的文件不需要且严禁一同放入此目录，其他文件放置目录可自己合理定义，不影响打包，webpack会自动找到以上文件夹和文件进行打包，打包后src_entries同级目录下会自动生成一个src_dist目录，打包后的文件目录结构不变。
+## 需要注意的点
+1.以上配置的js和html为整个页面的入口文件，_entries只能放入口文件，***其他被其引用的文件或依赖不需要且严禁一同放入***
+2.其他文件放置目录可自己合理定义，webpack会根据入口js递归查找这些依赖一起打包，webpack会自动找到以上文件夹和文件进行打包
+3.打包后src_entries同级目录下会自动生成一个src_dist目录存放打包后的文件，打包后的文件目录结构不变
 
 
 # 模块化的使用
-项目采用es6模块进行模块化开发，es6模块使用可以参照：https://github.com/simplexcspp/JavaScript-Module/issues/2
+项目采用es6模块进行模块化开发，es6模块使用可以参照：[ES6模块化简介](https://github.com/simplexcspp/JavaScript-Module/issues/2)
 
 
-#模板引擎的使用
+# 模板引擎的使用
+工程中已引入art-template，项目中统一使用此模板，以下是art-template在模块化开发时的使用示例：
+1.demo目录结构
+```shell
+├── components  #组件存放文件夹
+     └── menu  #一个带有模板引擎的菜单组件    
+         ├── menu.js   
+         ├── menu.art   # 模板
+         ├── data.js   # 渲染模板的数据，此处是静态写死，项目中是通过发送ajax请求来获取
+         └── menu.scss
+```
+2.menu.art
+```html
+<div class="menu-box">
+  <ul>
+    {{each list}}
+    <li>{{$value.title}}</li>
+    {{/each}}
+  </ul>
+</div>
+```
+3.data.js
+```javascript
+export default [
+  {title: '菜单1'},
+  {title: '菜单2'},
+  {title: '菜单3'},
+  {title: '菜单4'} 
+]
+```
+4.menu.scss,***项目中统一使用scss预处理语言***
+```scss 
+.menu-box{
+  ul{
+    li{
+      color:hotpink;
+    }
+  }
+}
+```
+5.memu.js
+```javascript
+import 'art-template/lib/template-web';
+
+import "./menu.scss";
+import render from "./menu.art";
+import data from "./data.js"
+
+function menu(container){
+  var html = render({list:data});
+  $(container).html(html);
+}
+export default menu
+```
+6.在入口js中的调用
+```javascript
+import menu from '../../***.../components/menu/menu.js' //此处路径省略，实际开发中引用路径要写对
+menu("#test");
+```
+7.html中结果：
+```html
+<div id="test">
+  <div class="menu-box">
+    <ul>  
+      <li>菜单1</li>
+      <li>菜单2</li>
+      <li>菜单3</li>  
+      <li>菜单4</li>  
+    </ul>
+  </div>
+</div>
+```
+
+
+# ajax的使用
+该工程已全局注入jquery,直接使用$.ajax即可发送请求,使用举例
+```javascript
+$.ajax({
+    type: "GET",
+    url: "test.json",
+    data: {
+        username: $("#username").val(),
+        content: $("#content").val()
+    },
+    dataType: "json",
+    success: function (data) {
+
+    }
+});
+```
+
+# mokejs模拟接口响应
+
+
+
+# 开发环境下设置代理解决跨域
 
 
 
 
-#ajax的使用
 
-
-
-#开发环境下设置代理解决跨域
-
-
-
-
-#miniui的嵌入
+# miniui的嵌入
 
 
 

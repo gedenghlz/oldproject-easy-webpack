@@ -1,3 +1,13 @@
-export default{
-    title:'我是左边标题'
-}
+export default [{
+        title: '菜单1'
+    },
+    {
+        title: '菜单2'
+    },
+    {
+        title: '菜单3'
+    },
+    {
+        title: '菜单4'
+    }
+]

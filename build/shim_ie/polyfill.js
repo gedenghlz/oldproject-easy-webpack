@@ -18,7 +18,6 @@
 import 'es5-shim';
 import 'es5-shim/es5-sham';
 import 'console-polyfill';
-import './json3.min.js';
 
 Object.assign = require('object-assign')
 

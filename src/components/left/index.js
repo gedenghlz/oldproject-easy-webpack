@@ -1,11 +1,11 @@
-import "./left.css";
 import 'art-template/lib/template-web';
 
+import "./left.scss";
 import render from "./left.art";
 import data from "./leftData.js"
 
-export default function(container){
-    console.log(container,7878)
-    const html = render(data);
-    $(container).html(html);
+function menu(container){
+  var html = render({list:data});
+  $(container).html(html);
 }
+export default menu
