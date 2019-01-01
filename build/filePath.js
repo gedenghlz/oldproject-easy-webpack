@@ -1,7 +1,7 @@
 const path = require("path")
 const ip = require('ip')
 
-const LOCALHOST = '127.0.0.1'
+const LOCALHOST = '0.0.0.0'
 const LAN = ip.address()
 
 const ROOT = path.resolve(__dirname, './../')

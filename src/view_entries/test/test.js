@@ -6,3 +6,16 @@ console.log(left)
 
 left("#test");
 
+
+$.ajax({
+    type: "GET",
+    url: "/sjgl/getYwyList.spring",
+    data: {
+    },
+    dataType: "json",
+    success: function (data) {
+        console.log(data,999)
+
+    }
+});
+

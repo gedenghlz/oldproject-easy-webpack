@@ -8,11 +8,15 @@ const setting = require('./../setting.js')
 let webpackConfig = require('./webpack.config.base')
 const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
+const proxyConfig = require('./proxy.js')
 
 webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
     `http://${PATH.LOCALHOST}:${PORT}`)
 
-webpackConfig.devtool = 'source-map'
+webpackConfig.devtool = 'source-map',
+
+
+
 
 webpackConfig.plugins.push(new DashboardPlugin({
     color: true,
@@ -35,6 +39,7 @@ const rennder = () => {
         publicPath: PATH.PUBLICPATH,
         hot: false,
         quiet: false,
+        proxy:proxyConfig,
         noInfo: false,
         lazy: false,
         stats: {colors: true},
