@@ -15,7 +15,7 @@ const PUBLICPATH = '/'
 const FAVICON = path.resolve(ROOT, '')
 const POLYFILL = path.resolve(ROOT, 'build/shim_ie/polyfill.js')
 const CSSIMPORT = path.resolve(STYLE, 'style')
-const VENDOR = path.join(ROOT, 'vendor')
+const VENDOR = path.join(ROOT, 'vendor_dist')
 
 
 module.exports = {

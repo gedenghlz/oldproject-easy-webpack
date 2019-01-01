@@ -1,8 +1,8 @@
 import {show} from "@root/src/components/a";
 import left from "@root/src/components/left";
 
-
-require ('@mock/mock.js');
+import '@mock/mock.js';
+import './test.scss';
 
 $.ajax({
     type: "GET",
@@ -21,7 +21,7 @@ $.ajax({
 
 
 show();
-console.log(left)
+// console.log(left)
 
 
 left("#test");
