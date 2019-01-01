@@ -24,6 +24,7 @@
          └── about.html 
 ```
 - 需要注意的点
+
 1.以上配置的js和html为整个页面的入口文件，_entries只能放入口文件，***其他被其引用的文件或依赖不需要且严禁一同放入***
 
 2.其他文件放置目录可自己合理定义，webpack会根据入口js递归查找这些依赖一起打包，webpack会自动找到以上文件夹和文件进行打包
@@ -38,7 +39,7 @@
 ## 4.3 模板引擎的使用
 工程中已引入art-template，项目中统一使用此模板，以下是art-template在模块化开发时的使用示例：
 
-1.demo目录结构
+- demo目录结构
 ```shell
 ├── components  #组件存放文件夹
      └── menu  #一个带有模板引擎的菜单组件    
@@ -47,7 +48,7 @@
          ├── data.js   # 渲染模板的数据，此处是静态写死，项目中是通过发送ajax请求来获取
          └── menu.scss
 ```
-2.menu.art
+- menu.art
 ```html
 <div class="menu-box">
   <ul>
@@ -57,7 +58,7 @@
   </ul>
 </div>
 ```
-3.data.js
+- data.js
 ```javascript
 export default [
   {title: '菜单1'},
@@ -66,7 +67,7 @@ export default [
   {title: '菜单4'} 
 ]
 ```
-4.menu.scss,***项目中统一使用scss预处理语言***
+- menu.scss,***项目中统一使用scss预处理语言***
 ```scss 
 .menu-box{
   ul{
@@ -76,7 +77,7 @@ export default [
   }
 }
 ```
-5.memu.js
+- memu.js
 ```javascript
 import 'art-template/lib/template-web';
 
@@ -90,12 +91,12 @@ function menu(container){
 }
 export default menu
 ```
-6.在入口js中的调用
+- 在入口js中的调用
 ```javascript
 import menu from '../../***.../components/menu/menu.js' //此处路径省略，实际开发中引用路径要写对
 menu("#test");
 ```
-7.html中结果：
+- html中结果：
 ```html
 <div id="test">
   <div class="menu-box">
