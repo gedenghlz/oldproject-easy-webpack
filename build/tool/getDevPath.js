@@ -20,8 +20,6 @@ fileDisplay(filePath);
 function fileDisplay(filePath) {
     //根据文件路径读取文件，返回文件列表
     fs.readdirSync(filePath).forEach(function (filename) {
-        // console.log(filename,8)
-
         //获取当前文件的绝对路径
         let filedir = path.join(filePath, filename);
         //根据文件路径获取文件信息，返回一个fs.Stats对象
@@ -30,7 +28,7 @@ function fileDisplay(filePath) {
         if (isDir) {
             if (filedir.indexOf('_entries') > 0) {
                 devPaths.push(filedir);
-                distPaths.push(filedir.replace('_entries','_dist'));
+                distPaths.push(filedir.replace('_entries', '_dist'));
 
             } else {
                 fileDisplay(filedir); //递归，如果是文件夹，就继续遍历该文件夹下面的文件
@@ -39,21 +37,7 @@ function fileDisplay(filePath) {
     })
 }
 
-
-// if (isFile) {
-//     let pathStr =
-//         filedir.split('webSrc/')[1];
-//     if (pathStr.indexOf('_unPack') === -1 && pathStr.indexOf('_tP') === -1) {
-//         copyFileConfig.push({
-//             from: filedir,
-//             to: filedir.replace('webSrc/src/', ''),
-//             force: true
-//         })
-//     } else if (pathStr.indexOf('_tP') > -1) {
-//         packFileConfig.push(filedir);
-//     }
-// }
-
-console.log(distPaths,888)
-
-module.exports ={distPaths,devPaths};
+module.exports = {
+    distPaths,
+    devPaths
+};

@@ -6,13 +6,14 @@ const PATH = require('../filePath.js');
 
 
 function getEntriesAndOutputs() {
-    var entries = {};
+    let entries = {};
     devPaths.forEach((entryJsPath, index) => {
-        var entryFiles = glob.sync(entryJsPath + '/**/*.js');
-        for (var i = 0; i < entryFiles.length; i++) {
-            var filePath = entryFiles[i];
-            var filename = filePath.substring(0,filePath.lastIndexOf('\/')).replace(PATH.ROOT+'/','').replace('_entries','_dist');
-            entries[filename] = filePath;
+        let entryFiles = glob.sync(entryJsPath + '/**/*.js');
+        for (let i = 0; i < entryFiles.length; i++) {
+            let filePath = entryFiles[i];
+            let filename = filePath.substring(0,filePath.lastIndexOf('\/')+1).replace(PATH.ROOT+'/','').replace('_entries','_dist');
+            let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));    
+            entries[filename+name] =filePath
         }
     })
     return {
@@ -21,30 +22,28 @@ function getEntriesAndOutputs() {
 }
 
 function html_plugins() {
-    var entriesFiles = getEntriesAndOutputs().entries
-    var htmlPluginItems = []
+    let entriesFiles = getEntriesAndOutputs().entries
+    let htmlPluginItems = []
     devPaths.forEach((viewPAth, index) => {
-        var entryHtml = glob.sync(viewPAth + '/**/*.html')
-        for (var i = 0; i < entryHtml.length; i++) {
-            var filePath = entryHtml[i]
-            var filename = filePath.substring(0,filePath.lastIndexOf('\/')+1).replace(PATH.ROOT+'/','').replace('_entries','_dist');
-            var name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
-            var conf = {
+        let entryHtml = glob.sync(viewPAth + '/**/*.html')
+        for (let i = 0; i < entryHtml.length; i++) {
+            let filePath = entryHtml[i]
+            let filename = filePath.substring(0, filePath.lastIndexOf('\/') + 1).replace(PATH.ROOT + '/', '').replace('_entries', '_dist');
+            let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
+            let conf = {
                 template: filePath,
-                filename: filename + name+'.html',
+                filename: filename + name + '.html',
                 hash: false, // 为静态资源生成hash值
+                chunks:['vendor','manifest',filename+name],
                 minify: {
                     removeComments: true, //移除HTML中的注释
                     collapseWhitespace: false //删除空白符与换行符
                 }
             }
-            //如果和入口js文件同名
-            if (filename in entriesFiles) {
-                conf.inject = 'body'
-                conf.chunks = ['vendor', filename]
-            }
+
             //跨页面引用，如pageA,pageB 共同引用了common-a-b.js，那么可以在这单独处理
             //if(pageA|pageB.test(filename)) conf.chunks.splice(1,0,'common-a-b')
+
             htmlPluginItems.push(new HtmlWebpackPlugin(conf))
         }
 
