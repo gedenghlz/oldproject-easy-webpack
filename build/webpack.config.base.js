@@ -20,6 +20,10 @@ const NODE_ENV = process.env.NODE_ENV || 'development'
 
 const __DEV__ = NODE_ENV === 'development'
 
+function resolve(dir) {
+    return path.join(__dirname, '..', dir)
+}
+
 let config = {
     entry: Object.assign(pathConfig.entries, {
         'vendor': [
@@ -38,6 +42,11 @@ let config = {
             'node_modules',
         ],
         extensions: ['*', '.js', '.jsx', '.json'],
+        alias: {
+            '@root': resolve(''),//根目录
+            '@build':resolve('build'),//build目录
+            '@mock':resolve('build/apiTool/mock')//apiTool目录
+        }
     },
     plugins: [
         // 全局暴露统一入口
@@ -46,6 +55,7 @@ let config = {
         })
     ].concat(html_plugins())
 }
+
 
 
 config.module.rules.push({

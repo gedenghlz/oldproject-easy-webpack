@@ -1,5 +1,25 @@
-import {show} from "../../components/a";
-import left from "../../components/left";
+import {show} from "@root/src/components/a";
+import left from "@root/src/components/left";
+
+
+require ('@mock/mock.js');
+
+$.ajax({
+    type: "GET",
+    url: "/news/index",
+    data: {
+    },
+    dataType: "json",
+    success: function (data) {
+        console.log(data,77777)
+    }
+});
+
+
+
+
+
+
 show();
 console.log(left)
 
@@ -14,8 +34,10 @@ $.ajax({
     },
     dataType: "json",
     success: function (data) {
-        console.log(data,999)
-
+        console.log(data)
     }
 });
+
+
+
 

@@ -8,7 +8,7 @@ const setting = require('./../setting.js')
 let webpackConfig = require('./webpack.config.base')
 const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
-const proxyConfig = require('./proxy.js')
+const proxyConfig = require('./apiTool/proxy.js')
 
 webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
     `http://${PATH.LOCALHOST}:${PORT}`)
@@ -18,10 +18,10 @@ webpackConfig.devtool = 'source-map',
 
 
 
-webpackConfig.plugins.push(new DashboardPlugin({
-    color: true,
-    title: 'Webpack Dash'
-}))
+// webpackConfig.plugins.push(new DashboardPlugin({
+//     color: true,
+//     title: 'Webpack Dash'
+// }))
 
 
 webpackConfig.plugins.push(
