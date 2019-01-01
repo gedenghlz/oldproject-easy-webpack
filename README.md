@@ -12,7 +12,7 @@
 
 
 # 四、怎么使用
-## 需打包的文件夹及文件命名规范
+## 4.1需打包的文件夹及文件命名规范
 - 下面是一个例子：
 ```shell
 ├── src_entries  #需要打包的文件夹需要以'_entries'结尾命名，且建议一个项目或者一个子系统中只定义一个
@@ -31,11 +31,11 @@
 3.打包后src_entries同级目录下会自动生成一个src_dist目录存放打包后的文件，打包后的文件目录结构不变
 
 
-## 模块化的使用
+## 4.2模块化的使用
 项目采用es6模块进行模块化开发，es6模块使用可以参照：[ES6模块化简介](https://github.com/simplexcspp/JavaScript-Module/issues/2)
 
 
-## 模板引擎的使用
+## 4.3模板引擎的使用
 工程中已引入art-template，项目中统一使用此模板，以下是art-template在模块化开发时的使用示例：
 1.demo目录结构
 ```shell
@@ -109,7 +109,7 @@ menu("#test");
 ```
 
 
-## ajax的使用
+## 4.4ajax的使用
 该工程已全局注入jquery,直接使用$.ajax即可发送请求,使用举例
 ```javascript
 $.ajax({
@@ -126,13 +126,13 @@ $.ajax({
 });
 ```
 
-## mokejs模拟接口响应
+## 4.5mokejs模拟接口响应
 
 
 
 
 
-## 开发环境下设置代理解决跨域
+## 4.6开发环境下设置代理解决跨域
 - 代理配置可在proxy.js中进行更改
 - 代码示例
 ```javascript
@@ -149,7 +149,7 @@ const proxyConfig = {
 
 
 
-## miniui的嵌入
+## 4.7miniui的嵌入
 
 
 
