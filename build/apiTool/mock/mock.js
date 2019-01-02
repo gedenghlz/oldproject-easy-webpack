@@ -1,5 +1,5 @@
 var Mock = require('mockjs');
-import page1 from "./page1.js";
+import {page1} from "./page1.js";
 import page2 from "./page2.js";
 
 var arr = [].concat(page1,page2);

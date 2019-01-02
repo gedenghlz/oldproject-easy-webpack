@@ -6,7 +6,7 @@ const Mock = require('mockjs');
 // 获取 mock.Random 对象
 const Random = Mock.Random;
 // mock一组数据
-const produceNewsData = function() {
+const produceNewsData = function () {
 	let articles = [];
 	for (let i = 0; i < 100; i++) {
 		let newArticleObject = {
@@ -22,9 +22,11 @@ const produceNewsData = function() {
 		articles: articles
 	}
 }
-export default[{
-    url: '/news/index',
+const page1 = [{
+	url: '/news/index',
 	data: produceNewsData,
 	method: 'get'
 }]
-
+export {
+	page1
+}

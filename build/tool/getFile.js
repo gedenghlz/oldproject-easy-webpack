@@ -11,9 +11,9 @@ function getEntriesAndOutputs() {
         let entryFiles = glob.sync(entryJsPath + '/**/*.js');
         for (let i = 0; i < entryFiles.length; i++) {
             let filePath = entryFiles[i];
-            let filename = filePath.substring(0,filePath.lastIndexOf('\/')+1).replace(PATH.ROOT+'/','').replace('_entries','_dist');
-            let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));    
-            entries[filename+name] =filePath
+            let filename = filePath.substring(0, filePath.lastIndexOf('\/') + 1).replace(PATH.ROOT + '/', '').replace('_entries', '_dist');
+            let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
+            entries[filename + name] = filePath
         }
     })
     return {
@@ -34,7 +34,7 @@ function html_plugins() {
                 template: filePath,
                 filename: filename + name + '.html',
                 hash: false, // 为静态资源生成hash值
-                chunks:['vendor','manifest',filename+name],
+                chunks: ['manifest', 'vendor', filename + name],
                 minify: {
                     removeComments: true, //移除HTML中的注释
                     collapseWhitespace: false //删除空白符与换行符

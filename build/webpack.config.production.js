@@ -36,7 +36,7 @@ webpackConfig.plugins.push(
         comments: false,
         compress: {
             warnings: false,
-            screw_ie8: true,
+            screw_ie8: false,
             conditionals: true,
             unused: true,
             comparisons: true,
@@ -45,7 +45,15 @@ webpackConfig.plugins.push(
             evaluate: true,
             if_return: true,
             join_vars: true,
+            properties:false
         },
+        output:{
+            beautify:true,
+            quote_keys:true
+        },
+        mangle:{
+            screw_ie8:false
+        }
     })
 )
 

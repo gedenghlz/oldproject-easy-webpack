@@ -1,4 +1,6 @@
-import {show} from "@root/src/components/a";
+import {
+    show
+} from "@root/src/components/a";
 import left from "@root/src/components/left";
 
 import '@mock/mock.js';
@@ -7,11 +9,10 @@ import './test.scss';
 $.ajax({
     type: "GET",
     url: "/news/index",
-    data: {
-    },
+    data: {},
     dataType: "json",
     success: function (data) {
-        console.log(data,77777)
+        // $("#test").html(data)
     }
 });
 
@@ -21,7 +22,8 @@ $.ajax({
 
 
 show();
-// console.log(left)
+console.log($,$.ajax)
+console.log(8889889)
 
 
 left("#test");
@@ -30,14 +32,9 @@ left("#test");
 $.ajax({
     type: "GET",
     url: "/sjgl/getYwyList.spring",
-    data: {
-    },
+    data: {},
     dataType: "json",
     success: function (data) {
-        console.log(data)
+        alert(data)
     }
 });
-
-
-
-

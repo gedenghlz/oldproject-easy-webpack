@@ -25,11 +25,12 @@ function resolve(dir) {
 
 let config = {
     context: path.resolve(__dirname, '../'),
-    entry: Object.assign(pathConfig.entries, {
+    entry: Object.assign({
         'vendor': [
-            path.join(PATH.POLYFILL), 'jquery-compat'
+            path.join(PATH.POLYFILL), "jquery-compat",
+
         ],
-    }),
+    }, pathConfig.entries),
     output: Object.assign({
         filename: '[name].[chunkhash:8].js',
         publicPath: PATH.publicPath
@@ -54,7 +55,7 @@ let config = {
             $: 'jquery-compat' //兼容ie8的jQuery版本	
         }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: ['vendor', 'manifest'],
+            name: ['vendor','manifest'],
             minChunks: Infinity,
             filename: 'vendor_dist/[name].[chunkhash:8].js'
         })
@@ -67,56 +68,67 @@ config.module.rules.push({
     test: /\.(js|jsx)$/,
     exclude: /node_modules/,
     use: [{
-        loader: 'babel-loader',
-        query: {
-            cacheDirectory: true,
-            plugins: [
-                'babel-plugin-transform-class-properties',
-                'babel-plugin-syntax-dynamic-import',
-                [
-                    'babel-plugin-transform-runtime',
-                    {
-                        helpers: true,
-                        polyfill: false, // we polyfill needed features in src/normalize.js
-                        regenerator: true,
-                    },
+            loader: 'babel-loader',
+            query: {
+                cacheDirectory: true,
+
+                "presets": [
+                    "es2015",
+                    "stage-0"
                 ],
-                [
-                    'babel-plugin-transform-object-rest-spread',
-                    {
-                        useBuiltIns: true // we polyfill Object.assign in src/normalize.js
-                    },
-                ],
-            ],
-            presets: [
-                ['babel-preset-env', { //自动es转义支持
-                    modules: false,
-                    // babel 转译成 ie9支持
-                    targets: {
-                        ie9: true,
-                    },
-                    // tuglify 会把代码完全转换为 ES5 以支持压缩 JS 代码。
-                    uglify: true,
-                }],
-            ]
-        },
-    }],
+                "plugins": [
+                    "add-module-exports", "transform-runtime"
+                ]
+
+
+                // plugins: [
+                //     'babel-plugin-transform-class-properties',
+                //     'babel-plugin-syntax-dynamic-import',
+
+                //     [
+                //         'babel-plugin-transform-runtime',
+                //         {
+                //             helpers: true,
+                //             polyfill: false, // we polyfill needed features in src/normalize.js
+                //             regenerator: true,
+                //         },
+                //     ],
+                //     [
+                //         'babel-plugin-transform-object-rest-spread',
+                //         {
+                //             useBuiltIns: true // we polyfill Object.assign in src/normalize.js
+                //         },
+                //     ],
+                // ],
+                // presets: [
+                //     ['babel-preset-env', { //自动es转义支持
+                //         modules: false,
+                //         // babel 转译成 ie8支持
+                //         targets: {
+                //             browsers: ['last 2 versions', 'ie 6-8'],
+                //         },
+                //         // tuglify 会把代码完全转换为 ES5 以支持压缩 JS 代码。
+                //         // uglify: true,
+                //     }, ],
+                // ]
+            },
+        }
+
+    ],
 })
 
 // Images and template
 // ------------------------------------
 config.module.rules.push({
     test: /\.(png|jpe?g|gif|svg)(\?.*)?$/,
-    use: [
-        {
-            loader: 'file-loader',
-            options: {
-                name: '[name].[ext]',
-                useRelativePath: true,
-                emitFile: false
-            }
+    use: [{
+        loader: 'file-loader',
+        options: {
+            name: '[name].[ext]',
+            useRelativePath: true,
+            emitFile: false
         }
-    ]
+    }]
 }, {
     test: /\.art$/,
     use: [{
