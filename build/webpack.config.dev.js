@@ -35,7 +35,7 @@ const rennder = () => {
     logger.success('加载webpack配置成功!')
     logger.info('正在启动服务器 ...')
     let server = new webpackDevServer(compiler, {
-        contentBase: PATH.SRC,
+        contentBase: PATH.ROOT,
         publicPath: PATH.PUBLICPATH,
         hot: false,
         quiet: false,

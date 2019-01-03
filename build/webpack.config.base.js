@@ -79,38 +79,6 @@ config.module.rules.push({
                 "plugins": [
                     "add-module-exports", "transform-runtime"
                 ]
-
-
-                // plugins: [
-                //     'babel-plugin-transform-class-properties',
-                //     'babel-plugin-syntax-dynamic-import',
-
-                //     [
-                //         'babel-plugin-transform-runtime',
-                //         {
-                //             helpers: true,
-                //             polyfill: false, // we polyfill needed features in src/normalize.js
-                //             regenerator: true,
-                //         },
-                //     ],
-                //     [
-                //         'babel-plugin-transform-object-rest-spread',
-                //         {
-                //             useBuiltIns: true // we polyfill Object.assign in src/normalize.js
-                //         },
-                //     ],
-                // ],
-                // presets: [
-                //     ['babel-preset-env', { //自动es转义支持
-                //         modules: false,
-                //         // babel 转译成 ie8支持
-                //         targets: {
-                //             browsers: ['last 2 versions', 'ie 6-8'],
-                //         },
-                //         // tuglify 会把代码完全转换为 ES5 以支持压缩 JS 代码。
-                //         // uglify: true,
-                //     }, ],
-                // ]
             },
         }
 
@@ -133,10 +101,6 @@ config.module.rules.push({
     test: /\.art$/,
     use: [{
         loader: 'art-template-loader',
-        options: {
-            // htmlResourceRoot: __dirname,
-            // root: path.resolve(__dirname)
-        }
     }]
 })
 
@@ -191,41 +155,8 @@ config.module.rules.push({
 
 
 
-
-// config.plugins.push(
-//     new CopyWebpackPlugin(copyFileConfig)
-// )
-
-
 config.plugins.push(extractStyles)
 config.plugins.push(new es3ifyPlugin())
-// Fonts
-// ------------------------------------
-;
-[
-    ['woff', 'application/font-woff'],
-    ['woff2', 'application/font-woff2'],
-    ['otf', 'font/opentype'],
-    ['ttf', 'application/octet-stream'],
-    ['eot', 'application/vnd.ms-fontobject'],
-    ['svg', 'image/svg+xml'],
-].forEach((font) => {
-    const extension = font[0]
-    const mimetype = font[1]
-    config.module.rules.push({
-        test: new RegExp(`\\.${extension}$`),
-        loader: 'url-loader',
-        options: {
-            name: 'fonts/[name].[ext]',
-            limit: 10000,
-            mimetype,
-        },
-    })
-})
 
-config.module.rules.push({
-    test: /\.ejs/,
-    loader: 'ejs-render-loader'
-})
 
 module.exports = config

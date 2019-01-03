@@ -1,15 +1,15 @@
+/**
+ * 获取入口文件夹
+ * */
 let fs = require('fs');
 let path = require('path');
 const PATH = require('./../filePath')
 
-//解析需要遍历的文件夹
-let filePath = path.resolve(PATH.ROOT);
-
 let devPaths = [];
 let distPaths = [];
-// let packFileConfig = [];
 
-
+//解析需要遍历的文件夹
+let filePath = path.resolve(PATH.ROOT);
 //调用文件遍历方法
 fileDisplay(filePath);
 

@@ -12,15 +12,24 @@ yarn-error.log*
 *.njsproj
 *.sln
 
-package-lock.json
+# package-lock.json
+# node_modules/
+# /dist/
+# *_dist/
+# vendor/
 
-node_modules/
-/dist/
-*_dist/
-vendor/
 
+#忽略根目录里面的其他的非脚手架问题
+/*
+/*/
+!/build/
+!/.gitignore
+!/README.md
+!/package.json
 
-/build/mock
-!/build/page1.js   
-!/build/page2.js   
-!/build/mock.js   
+#mock里面项目可配置，避免被脚手架覆盖
+/build/mock/
+!/build/mock/page1.js   
+!/build/mock/page2.js   
+!/build/mock/mock.js 
+

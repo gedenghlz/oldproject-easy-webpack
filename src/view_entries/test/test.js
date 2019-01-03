@@ -7,13 +7,15 @@ import '@mock/mock.js';
 import './test.scss';
 
 $.ajax({
-    type: "GET",
-    url: "/news/index",
-    data: {},
-    dataType: "json",
+    type: "get",
+    url: "https://sug.so.360.cn/suggest",
+    data: {word:'c'},
+    dataType: "jsonp",
+    contentType:'application/json;charset=utf-8',
     success: function (data) {
-        // $("#test").html(data)
-    }
+        $("#test").html(data)
+        console.log(data,777)
+    }   
 });
 
 
@@ -22,8 +24,7 @@ $.ajax({
 
 
 show();
-console.log($,$.ajax)
-console.log(8889889)
+console.log(9889)
 
 
 left("#test");
@@ -35,6 +36,6 @@ $.ajax({
     data: {},
     dataType: "json",
     success: function (data) {
-        alert(data)
+        // alert(data)
     }
 });

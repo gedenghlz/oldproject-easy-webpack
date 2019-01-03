@@ -4,10 +4,15 @@
  the application starts. Doing this allows us to safely use modern language
  features even when the end user is running an older browser.
  The following polyfills are included by default:
+ 
  1) Object.assign
  2) Promise
  3) Fetch
  ====================================================== */
+import 'es5-shim';
+import 'es5-shim/es5-sham';
+import 'console-polyfill';
+
 
 // 1) Object.assign
 // ------------------------------------
@@ -15,9 +20,7 @@
 // defer to `object-assign`. If our Object.assign implementation is correct
 // (determined by `object-assign` internally) the polyfill will be discarded
 // and the native implementation used.
-import 'es5-shim';
-import 'es5-shim/es5-sham';
-import 'console-polyfill';
+
 
 Object.assign = require('object-assign')
 

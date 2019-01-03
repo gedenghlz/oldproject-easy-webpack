@@ -1,3 +1,7 @@
+/**
+ *  获取入口js和配置html
+ * */
+
 const glob = require('glob')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const devPaths = require('./getDevPath.js').devPaths;
@@ -40,10 +44,6 @@ function html_plugins() {
                     collapseWhitespace: false //删除空白符与换行符
                 }
             }
-
-            //跨页面引用，如pageA,pageB 共同引用了common-a-b.js，那么可以在这单独处理
-            //if(pageA|pageB.test(filename)) conf.chunks.splice(1,0,'common-a-b')
-
             htmlPluginItems.push(new HtmlWebpackPlugin(conf))
         }
 

@@ -208,17 +208,8 @@ $.ajax({
 
 ### 4.8其他功能
 - css中的样式会自动加浏览器兼容前缀
-
-
-
-
-
-
-
-
-
-
-
+- jquery全局注入，项目不需要引用jquery即可使用
+- 兼容ie8
 
 ## 五、目录结构
 ```shell
@@ -226,18 +217,23 @@ $.ajax({
 
 ├── build  #webpack配置文件夹    
 │   ├── filePath.js  #文件路径   
+│   ├── portConfig.js  #项目启动端口配置
 │   ├── tool  #封装的小工具（获取文件，log）    
 │   │   ├── getFile.js   
 │   │   ├── getDevPath.js   # 获取所有入口文件所在的路径
 │   │   └── logger.js 
 │   ├──shim-ie #兼容ie的处理文件
-│   │   ├── json3.min.js   
 │   │   └── polyfill.js 
+│   ├──apiTool #兼容ie的处理文件
+│   │   ├── mock  # 接口模拟响应
+│   │   │   ├── mock.js   #入口
+│   │   │   ├── page1.js   # 使用demo
+│   │   │   └── page2.js #使用demo
+│   │   └── proxy.js #设置代理解决跨域
 │   ├── webpack.config.base.js  #  webpack基础配置  
 │   ├── webpack.config.dev.js  #  webpack 开发模式基础配置   
 │   └── webpack.config.production.js  #  webpack 生产模式基础配置     
 ├── package.json  
-├── setting.js  #  项目设置（端口）     
 ├── README.md   
 ├── .gitignore #git提交忽略文件    
 └── vendor # 公用js打包地址

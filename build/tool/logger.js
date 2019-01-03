@@ -1,3 +1,6 @@
+/**
+ * 输出日志 
+ * */
 const chalk = require('chalk')
 const figures = require('figures')
 
