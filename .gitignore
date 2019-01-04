@@ -15,9 +15,9 @@ yarn-error.log*
 # package-lock.json
 # node_modules/
 # /dist/
-# *_dist/
+*_dist/
 # vendor/
-
+# /src/
 
 #忽略根目录里面的其他的非脚手架问题
 /*
@@ -26,6 +26,7 @@ yarn-error.log*
 !/.gitignore
 !/README.md
 !/package.json
+!/demo/
 
 #mock里面项目可配置，避免被脚手架覆盖
 /build/mock/

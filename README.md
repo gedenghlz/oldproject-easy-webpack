@@ -177,7 +177,7 @@ $.ajax({
 ```
 
 ### 4.7 开发环境下设置代理解决跨域
-- 代理配置可在proxy.js中进行更改
+- 代理配置可在build/apiTool/proxy.js中进行更改
 - 代码示例
 ```javascript
 const proxyConfig = {
