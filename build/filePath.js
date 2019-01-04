@@ -17,6 +17,8 @@ const VIEW = path.resolve(SRC, 'view')
 const PUBLICPATH = '/'
 const FAVICON = path.resolve(ROOT, '')
 const POLYFILL = path.resolve(ROOT, 'build/shim_ie/polyfill.js')
+const MOCK = path.resolve(ROOT, 'build/apiTool/mock/mock.js')
+
 const CSSIMPORT = path.resolve(STYLE, 'style')
 const VENDOR = path.join(ROOT, 'vendor_dist')
 
@@ -24,6 +26,7 @@ const VENDOR = path.join(ROOT, 'vendor_dist')
 module.exports = {
     VENDOR,
     ROOT,
+    MOCK,
     SRC,
     HTML,
     FAVICON,

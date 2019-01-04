@@ -1,7 +1,6 @@
 import {show} from "@root/src/components/a";
 import left from "@root/src/components/left";
 
-import '@mock/mock.js';
 import './test.scss';
 
 $.ajax({

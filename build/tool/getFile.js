@@ -44,9 +44,11 @@ function html_plugins() {
                     collapseWhitespace: false //删除空白符与换行符
                 }
             }
+            if(process.env.NODE_ENV==='development'){
+                conf.chunks.unshift('mock');
+            }
             htmlPluginItems.push(new HtmlWebpackPlugin(conf))
         }
-
     })
 
     return htmlPluginItems

@@ -3,7 +3,6 @@ import {
 } from "@root/src/components/a";
 import left from "@root/src/components/left";
 
-import '@mock/mock.js';
 import './test.scss';
 
 $.ajax({
@@ -13,7 +12,7 @@ $.ajax({
     dataType: "jsonp",
     contentType:'application/json;charset=utf-8',
     success: function (data) {
-        $("#test").html(data)
+        // $("#test").html(data)
         console.log(data,777)
     }   
 });

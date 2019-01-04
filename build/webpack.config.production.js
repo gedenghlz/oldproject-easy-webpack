@@ -30,7 +30,6 @@ webpackConfig.plugins.push(
         minimize: true,
         debug: false,
     }),
-
     new webpack.optimize.UglifyJsPlugin({
         sourceMap: false,
         comments: false,

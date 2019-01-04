@@ -162,9 +162,8 @@ export default[{
 }]
 ```
 
-- 步骤2：在js中使用mockjs:
+- 步骤2：开发环境下，mockjs已经打包加入页面，可以直接在js中使用mockjs:
 ```javascript
-require ('@mock/mock.js');
 $.ajax({
     type: "GET",
     url: "/news/index",
