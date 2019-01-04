@@ -32,16 +32,14 @@ const extractStyles = new ExtractTextPlugin({
 
 let config = {
     context: path.resolve(__dirname, '../'),
-    entry: Object.assign(__DEV__ ? {
-        'mock': [path.join(PATH.MOCK)],
-    } : {}, {
+    entry: Object.assign({
         'vendor': [
-            path.join(PATH.POLYFILL), "jquery-compat",
-        ]
+            path.join(PATH.POLYFILL), "jquery-compat"
+        ].concat(__DEV__ ? [path.join(PATH.MOCK)] : [])
     }, pathConfig.entries),
     output: Object.assign({
         filename: '[name].[chunkhash:8].js',
-        publicPath: PATH.publicPath
+        publicPath: PATH.publicPath,
     }),
     module: {
         rules: [{
@@ -147,13 +145,6 @@ let config = {
 
 
 
-if (process.env.NODE_ENV === 'development') {
-    config.plugins.unshift(new webpack.optimize.CommonsChunkPlugin({
-        name: 'mock',
-        minChunks: Infinity,
-        filename: 'vendor_dist/[name].[chunkhash:8].js'
-    }))
-}
 
 
 module.exports = config

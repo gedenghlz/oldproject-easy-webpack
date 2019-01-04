@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
 const DashboardPlugin = require('webpack-dashboard/plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
+const path = require('path')
 
 const PATH = require('./filePath')
 const setting = require('./portConfig')
@@ -13,9 +14,16 @@ const proxyConfig = require('./apiTool/proxy.js')
 webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
     `http://${PATH.LOCALHOST}:${PORT}`)
 
-webpackConfig.devtool = 'source-map',
+webpackConfig.devtool = 'source-map'
 
+// webpackConfig.plugins.splice(1, 0, new webpack.optimize.CommonsChunkPlugin({
+//     name: 'mockConfig',
+//     chunk: ['mock'],
+//     minChunks: 0,
+//     filename: 'vendor_dist/[name].[chunkhash:8].js'
+// }))
 
+webpackConfig.entry.mock = path.join(PATH.MOCK)
 
 
 webpackConfig.plugins.push(new DashboardPlugin({
@@ -39,10 +47,12 @@ const rennder = () => {
         publicPath: PATH.PUBLICPATH,
         hot: false,
         quiet: false,
-        proxy:proxyConfig,
+        proxy: proxyConfig,
         noInfo: false,
         lazy: false,
-        stats: {colors: true},
+        stats: {
+            colors: true
+        },
         setup: function (app) {
             logger.success('服务器启动成功！')
             logger.success('服务器IP：')

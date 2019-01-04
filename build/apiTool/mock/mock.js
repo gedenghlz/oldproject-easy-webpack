@@ -8,3 +8,6 @@ for(var i=0; i<arr.length ; i++){
     var item = arr[i];
     Mock.mock(RegExp('.*' + item.url + '.*'), item.method, item.data);
 }
+
+
+console.log('mock被加载')

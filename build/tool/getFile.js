@@ -36,6 +36,7 @@ function html_plugins() {
             let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
             let conf = {
                 template: filePath,
+                chunksSortMode:'manual',
                 filename: filename + name + '.html',
                 hash: false, // 为静态资源生成hash值
                 chunks: ['manifest', 'vendor', filename + name],
@@ -43,9 +44,6 @@ function html_plugins() {
                     removeComments: true, //移除HTML中的注释
                     collapseWhitespace: false //删除空白符与换行符
                 }
-            }
-            if(process.env.NODE_ENV==='development'){
-                conf.chunks.unshift('mock');
             }
             htmlPluginItems.push(new HtmlWebpackPlugin(conf))
         }

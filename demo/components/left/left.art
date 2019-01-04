@@ -1,7 +1,0 @@
-<div class="menu-box">
-  <ul>
-    {{each list}}
-    <li>{{$value.title}}</li>
-    {{/each}}
-  </ul>
-</div>
