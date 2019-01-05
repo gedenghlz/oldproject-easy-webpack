@@ -52,7 +52,9 @@ webpackConfig.plugins.push(
         },
         mangle:{
             screw_ie8:false
-        }
+        },
+        parallel:true,
+        cache:true
     })
 )
 

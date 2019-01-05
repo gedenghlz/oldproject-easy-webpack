@@ -17,13 +17,19 @@ $.ajax({
     }   
 });
 
+const a = {key:'d'}
+const b= {value:898}
+const c = {...a,...b};
+
+console.log(JSON.stringify(c),888)
 
 
-
+// a=iiuii;
 
 
 show();
-console.log(988933)
+console.log(222231)
+
 
 
 left("#test");

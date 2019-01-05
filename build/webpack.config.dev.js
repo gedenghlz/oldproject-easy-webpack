@@ -2,6 +2,9 @@ const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
 const portfinder = require("portfinder");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const notifier = require('node-notifier')
+
 
 const PATH = require('./filePath')
 const setting = require('./portConfig')
@@ -13,9 +16,6 @@ const proxyConfig = require('./apiTool/proxy.js')
 
 webpackConfig.devtool = 'source-map'
 
-
-
-
 const rennder = (PORT) => {
     let compiler = webpack(webpackConfig)
     logger.success('加载webpack配置成功!')
@@ -24,21 +24,25 @@ const rennder = (PORT) => {
         contentBase: PATH.ROOT,
         publicPath: PATH.PUBLICPATH,
         hot: false,
-        quiet: false,
+        quiet: true,
         proxy: proxyConfig,
         noInfo: false,
+        overlay: {
+            warnings: true,
+            errors: true
+        },
         lazy: false,
         stats: {
             colors: true
-        },
-        setup: function (app) {
-            logger.success('服务器启动成功！')
-            logger.success('服务器IP：')
-            logger.success(`       http://${PATH.LOCALHOST}:${PORT}`)
-            logger.success(`       http://${PATH.LAN}:${PORT}`)
-        },
+        }
     })
-    server.listen(PORT)
+    server.listen(PORT, '', () => {
+        logger.success('服务器启动成功！')
+        logger.success('服务器IP：')
+        logger.success(`       http://${PATH.LOCALHOST}:${PORT}`)
+        logger.success(`       http://${PATH.LAN}:${PORT}`)
+
+    })
 }
 
 //接口占用的情况下自动选择可用接口
@@ -50,8 +54,26 @@ portfinder.getPortPromise()
         webpackConfig.plugins.push(
             new OpenBrowserPlugin({
                 url: `http://${PATH.LOCALHOST}:${port}/webpack-dev-server`
+            }),
+            new FriendlyErrorsPlugin({
+                compilationSuccessInfo: {
+                    messages: [
+                        `Your application is running here: http://${PATH.LOCALHOST}:${PORT}:${port}`
+                    ]
+                },
+                onErrors: (severity, errors) => {
+                    if (severity !== 'error') return
+                    const error = errors[0]
+                    const filename = error.file && error.file.split('!').pop()
+                    notifier.notify({
+                        title: 'oldproject-easy-webpack',
+                        message: severity + ': ' + error.name,
+                        subtitle: filename || ''
+                    })
+                }
             })
         )
+
         rennder(port)
     })
     .catch((err) => {
