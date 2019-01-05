@@ -1,0 +1,28 @@
+@import "./../../style/utill";
+
+.content {
+  padding-top: 60px;
+  height: 100%;
+  max-width: 750px;
+  margin: auto;
+  h1{
+    font-size: rem(140px);
+  }
+  a{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: rem(100px);
+  }
+  @include media("<=tablet") {
+    background-color: red;
+  }
+
+  @include media(">tablet", "<desktop") {
+    background-color: yellow;
+  }
+
+  @include media(">=desktop") {
+    background-color: $orange;
+  }
+}
