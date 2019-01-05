@@ -1,8 +1,7 @@
 const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
-const DashboardPlugin = require('webpack-dashboard/plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
-const path = require('path')
+const portfinder = require("portfinder");
 
 const PATH = require('./filePath')
 const setting = require('./portConfig')
@@ -11,34 +10,13 @@ const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
 const proxyConfig = require('./apiTool/proxy.js')
 
-webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
-    `http://${PATH.LOCALHOST}:${PORT}`)
 
 webpackConfig.devtool = 'source-map'
 
-// webpackConfig.plugins.splice(1, 0, new webpack.optimize.CommonsChunkPlugin({
-//     name: 'mockConfig',
-//     chunk: ['mock'],
-//     minChunks: 0,
-//     filename: 'vendor_dist/[name].[chunkhash:8].js'
-// }))
-
-webpackConfig.entry.mock = path.join(PATH.MOCK)
 
 
-webpackConfig.plugins.push(new DashboardPlugin({
-    color: true,
-    title: 'Webpack Dash'
-}))
 
-
-webpackConfig.plugins.push(
-    new OpenBrowserPlugin({
-        url: `http://${PATH.LOCALHOST}:${PORT}/webpack-dev-server`
-    })
-)
-
-const rennder = () => {
+const rennder = (PORT) => {
     let compiler = webpack(webpackConfig)
     logger.success('加载webpack配置成功!')
     logger.info('正在启动服务器 ...')
@@ -63,4 +41,19 @@ const rennder = () => {
     server.listen(PORT)
 }
 
-rennder()
+//接口占用的情况下自动选择可用接口
+portfinder.basePort = PORT;
+portfinder.getPortPromise()
+    .then((port) => {
+        webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
+            `http://${PATH.LOCALHOST}:${port}`)
+        webpackConfig.plugins.push(
+            new OpenBrowserPlugin({
+                url: `http://${PATH.LOCALHOST}:${port}/webpack-dev-server`
+            })
+        )
+        rennder(port)
+    })
+    .catch((err) => {
+        logger.error('启动失败')
+    });

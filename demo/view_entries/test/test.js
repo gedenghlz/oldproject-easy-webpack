@@ -1,7 +1,7 @@
 import {
     show
-} from "@root/src/components/a";
-import left from "@root/src/components/left";
+} from "@root/demo/components/a";
+import left from "@root/demo/components/left";
 
 import './test.scss';
 
@@ -23,7 +23,7 @@ $.ajax({
 
 
 show();
-console.log(9889)
+console.log(988933)
 
 
 left("#test");

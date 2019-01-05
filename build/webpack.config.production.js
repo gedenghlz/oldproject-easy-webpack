@@ -47,7 +47,7 @@ webpackConfig.plugins.push(
             properties:false
         },
         output:{
-            beautify:true,
+            beautify:false,
             quote_keys:true
         },
         mangle:{

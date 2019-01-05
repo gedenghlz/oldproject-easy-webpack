@@ -39,12 +39,11 @@ let config = {
     }, pathConfig.entries),
     output: Object.assign({
         filename: '[name].[chunkhash:8].js',
-        publicPath: PATH.publicPath,
     }),
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|bower_components)/,
                 use: [{
                         loader: 'babel-loader',
                         query: {
