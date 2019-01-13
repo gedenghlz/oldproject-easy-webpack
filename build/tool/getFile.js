@@ -36,7 +36,6 @@ function html_plugins() {
             let name = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'));
             let conf = {
                 template: filePath,
-                chunksSortMode:'manual',
                 filename: filename + name + '.html',
                 hash: false, // 为静态资源生成hash值
                 chunks: ['manifest', 'vendor', filename + name],

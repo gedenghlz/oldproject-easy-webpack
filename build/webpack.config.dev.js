@@ -1,8 +1,10 @@
 const webpack = require('webpack')
 const webpackDevServer = require('webpack-dev-server')
-const DashboardPlugin = require('webpack-dashboard/plugin')
 const OpenBrowserPlugin = require('open-browser-webpack-plugin')
-const path = require('path')
+const portfinder = require("portfinder");
+const FriendlyErrorsPlugin = require("friendly-errors-webpack-plugin");
+const notifier = require('node-notifier')
+
 
 const PATH = require('./filePath')
 const setting = require('./portConfig')
@@ -11,34 +13,10 @@ const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
 const proxyConfig = require('./apiTool/proxy.js')
 
-webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
-    `http://${PATH.LOCALHOST}:${PORT}`)
 
 webpackConfig.devtool = 'source-map'
 
-// webpackConfig.plugins.splice(1, 0, new webpack.optimize.CommonsChunkPlugin({
-//     name: 'mockConfig',
-//     chunk: ['mock'],
-//     minChunks: 0,
-//     filename: 'vendor_dist/[name].[chunkhash:8].js'
-// }))
-
-webpackConfig.entry.mock = path.join(PATH.MOCK)
-
-
-webpackConfig.plugins.push(new DashboardPlugin({
-    color: true,
-    title: 'Webpack Dash'
-}))
-
-
-webpackConfig.plugins.push(
-    new OpenBrowserPlugin({
-        url: `http://${PATH.LOCALHOST}:${PORT}/webpack-dev-server`
-    })
-)
-
-const rennder = () => {
+const rennder = (PORT) => {
     let compiler = webpack(webpackConfig)
     logger.success('加载webpack配置成功!')
     logger.info('正在启动服务器 ...')
@@ -46,21 +24,58 @@ const rennder = () => {
         contentBase: PATH.ROOT,
         publicPath: PATH.PUBLICPATH,
         hot: false,
-        quiet: false,
+        quiet: true,
         proxy: proxyConfig,
         noInfo: false,
+        overlay: {
+            warnings: true,
+            errors: true
+        },
         lazy: false,
         stats: {
             colors: true
-        },
-        setup: function (app) {
-            logger.success('服务器启动成功！')
-            logger.success('服务器IP：')
-            logger.success(`       http://${PATH.LOCALHOST}:${PORT}`)
-            logger.success(`       http://${PATH.LAN}:${PORT}`)
-        },
+        }
     })
-    server.listen(PORT)
+    server.listen(PORT, '', () => {
+        logger.success('服务器启动成功！')
+        logger.success('服务器IP：')
+        logger.success(`       http://${PATH.LOCALHOST}:${PORT}`)
+        logger.success(`       http://${PATH.LAN}:${PORT}`)
+
+    })
 }
 
-rennder()
+//接口占用的情况下自动选择可用接口
+portfinder.basePort = PORT;
+portfinder.getPortPromise()
+    .then((port) => {
+        webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
+            `http://${PATH.LOCALHOST}:${port}`)
+        webpackConfig.plugins.push(
+            new OpenBrowserPlugin({
+                url: `http://${PATH.LOCALHOST}:${port}/webpack-dev-server`
+            }),
+            new FriendlyErrorsPlugin({
+                compilationSuccessInfo: {
+                    messages: [
+                        `Your application is running here: http://${PATH.LOCALHOST}:${PORT}:${port}`
+                    ]
+                },
+                onErrors: (severity, errors) => {
+                    if (severity !== 'error') return
+                    const error = errors[0]
+                    const filename = error.file && error.file.split('!').pop()
+                    notifier.notify({
+                        title: 'oldproject-easy-webpack',
+                        message: severity + ': ' + error.name,
+                        subtitle: filename || ''
+                    })
+                }
+            })
+        )
+
+        rennder(port)
+    })
+    .catch((err) => {
+        logger.error('启动失败')
+    });

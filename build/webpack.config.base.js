@@ -3,8 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path')
 const es3ifyPlugin = require('es3ify-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-
+const HappyPack = require('HappyPack');
 
 const PATH = require('./filePath')
 const {
@@ -39,24 +38,19 @@ let config = {
     }, pathConfig.entries),
     output: Object.assign({
         filename: '[name].[chunkhash:8].js',
-        publicPath: PATH.publicPath,
     }),
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|bower_components)/,
                 use: [{
-                        loader: 'babel-loader',
-                        query: {
-                            cacheDirectory: true,
-                            "presets": [
-                                "es2015",
-                                "stage-0"
-                            ],
-                            "plugins": [
-                                "add-module-exports", "transform-runtime"
-                            ]
-                        },
+                        loader: 'cache-loader', //减少编译时间
+                        options: {
+                            cacheDirectory: path.resolve('build/','.cache')
+                        }
+                    },
+                    {
+                        loader: 'happypack/loader?id=happyBabel'
                     }
 
                 ],
@@ -71,12 +65,14 @@ let config = {
                         emitFile: false
                     }
                 }]
-            }, {
+            },
+            {
                 test: /\.art$/,
                 use: [{
                     loader: 'art-template-loader',
                 }]
-            }, {
+            },
+            {
                 test: /\.(sass|scss|css$)$/,
                 loader: extractStyles.extract({
                     fallback: 'style-loader',
@@ -128,6 +124,22 @@ let config = {
         }
     },
     plugins: [
+        new HappyPack({
+            id: 'happyBabel',
+            loaders: [{
+                loader: 'babel-loader',
+                query: {
+                    cacheDirectory: true,
+                    "presets": [
+                        "es2015",
+                        "stage-0"
+                    ],
+                    "plugins": [
+                        "add-module-exports", "transform-runtime"
+                    ]
+                },
+            }]
+        }),
         // 全局暴露统一入口
         new webpack.ProvidePlugin({
             $: 'jquery-compat' //兼容ie8的jQuery版本	

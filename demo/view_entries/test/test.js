@@ -1,7 +1,7 @@
 import {
     show
-} from "@root/src/components/a";
-import left from "@root/src/components/left";
+} from "@root/demo/components/a";
+import left from "@root/demo/components/left";
 
 import './test.scss';
 
@@ -13,17 +13,23 @@ $.ajax({
     contentType:'application/json;charset=utf-8',
     success: function (data) {
         // $("#test").html(data)
-        console.log(data,777)
+        console.log(JSON.stringify(data),5)
     }   
 });
 
+const a = {key:'d'}
+const b= {value:898}
+const c = {...a,...b};
+
+console.log(JSON.stringify(c),888)
 
 
-
+// a=iiuii;
 
 
 show();
-console.log(9889)
+console.log(222231)
+
 
 
 left("#test");
@@ -45,6 +51,6 @@ $.ajax({
     data: {},
     dataType: "json",
     success: function (data) {
-        console.log(data,2222)
+        console.log(JSON.stringify(data),2222)
     }
 });

@@ -1,32 +1,51 @@
 /**
  * 演示例子请勿删除 
  * */
-// 引入mockjs
-const Mock = require('mockjs');
-// 获取 mock.Random 对象
-const Random = Mock.Random;
-// mock一组数据
-const produceNewsData = function () {
-	let articles = [];
-	for (let i = 0; i < 100; i++) {
-		let newArticleObject = {
-			title: Random.csentence(5, 30), //  Random.csentence( min, max )
-			thumbnail_pic_s: Random.dataImage('300x250', 'mock的图片'), // Random.dataImage( size, text ) 生成一段随机的 Base64 图片编码
-			author_name: Random.cname(), // Random.cname() 随机生成一个常见的中文姓名
-			date: Random.date() + ' ' + Random.time() // Random.date()指示生成的日期字符串的格式,默认为yyyy-MM-dd；Random.time() 返回一个随机的时间字符串
-		}
-		articles.push(newArticleObject)
-	}
 
-	return {
-		articles: articles
-	}
-}
 const page1 = [{
 	url: '/news/index',
-	data: produceNewsData,
+	data: {
+		"key1": "string",
+		"key2": "csentence",
+		"key3": 'integer/0/3',
+		mockNum: 3
+	},
+	defaultObj: {
+		success: true,
+		message: '操作成功',
+		total: 0,
+		pageSize: 0,
+		pageIndex: 0
+
+	},
 	method: 'get'
 }]
+
+
+// 返回结果
+/*
+{
+	"success": true,
+	"message": "操作成功",
+	"total": 0,
+	"pageSize": 0,
+	"pageIndex": 0,
+	"data": [{
+		"key1": "fxfmsuj",
+		"key2": "一系使联年。",
+		"key3": 0
+	}, {
+		"key1": "mwetbqc",
+		"key2": "今须没南条解法。",
+		"key3": 1
+	}, {
+		"key1": "ursrvmy",
+		"key2": "效青出压时面。",
+		"key3": 2
+	}]
+}
+*/
+
 export {
 	page1
 }
