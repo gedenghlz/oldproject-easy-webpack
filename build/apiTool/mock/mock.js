@@ -3,7 +3,7 @@ import {
     page1
 } from "./page1.js";
 import page2 from "./page2.js";
-import joinData from "./util";
+import {joinData} from "./util";
 
 let defaultObj = {
     success: true,
@@ -17,7 +17,7 @@ let mockConfig = [
 ]
 mockConfig.forEach(item => {
     let url = item.url;
-    let data = joinData(Object.assign(defaultObj, item.defaultObj), item.data);
+    let data = Object.assign({},defaultObj,{data:joinData( item.data)},item.defaultObj?item.defaultObj:[]) 
     Mock.mock(RegExp('.*' + url + '.*'), item.method, data);
 
 })

@@ -14,7 +14,9 @@ const getData = function (curItem) {
     if (Object.prototype.toString.call(fn) !== "[object Function]") return curItem;
     let argu
     if (arr.length > 1) {
-        argu = (arr.slice(1, arr.length));
+        argu = arr.slice(1, arr.length).map(item => {
+            return JSON.parse(item)
+        });
     } else {
         argu = (arr[0] == 'string' ? ['lower', 5, 10] : [5, 10]);
     }
@@ -75,7 +77,8 @@ const getRadom = function (obj) {
 }
 
 
-export default function (defaultObj, obj) {
+export const joinData = function (obj) {
+
     let data
     let num = obj.mockNum;
     if (num) {
@@ -86,8 +89,5 @@ export default function (defaultObj, obj) {
     } else {
         data = getRadom(obj)
     }
-    return {
-        ...defaultObj,
-        data
-    }
+    return data
 }

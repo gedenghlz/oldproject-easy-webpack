@@ -8,42 +8,31 @@ import './test.scss';
 $.ajax({
     type: "get",
     url: "https://sug.so.360.cn/suggest",
-    data: {word:'c'},
+    data: {
+        word: 'c'
+    },
     dataType: "jsonp",
-    contentType:'application/json;charset=utf-8',
+    contentType: 'application/json;charset=utf-8',
     success: function (data) {
-        // $("#test").html(data)
-        console.log(JSON.stringify(data),5)
-    }   
+        console.log(data, '发送ajax示例')
+    }
 });
 
-const a = {key:'d'}
-const b= {value:898}
-const c = {...a,...b};
-
-console.log(JSON.stringify(c),888)
-
-
-// a=iiuii;
+const a = {
+    key: 'd'
+}
+const b = {
+    value: 898
+}
+const c = { ...a,
+    ...b
+};
 
 
 show();
-console.log(222231)
-
-
 
 left("#test");
 
-
-$.ajax({
-    type: "GET",
-    url: "/sjgl/getYwyList.spring",
-    data: {},
-    dataType: "json",
-    success: function (data) {
-        // alert(data)
-    }
-});
 
 $.ajax({
     type: "GET",
@@ -51,6 +40,27 @@ $.ajax({
     data: {},
     dataType: "json",
     success: function (data) {
-        console.log(JSON.stringify(data),2222)
+        console.log(data, 'mock数据示例二')
     }
 });
+
+$.ajax({
+    type: "GET",
+    url: "/news/test",
+    data: {},
+    dataType: "json",
+    success: function (data) {
+        console.log(JSON.stringify(data), 'mock数据示例一')
+    }
+});
+
+$.ajax({
+    type: "GET",
+    url: "/news/about",
+    data: {},
+    dataType: "json",
+    success: function (data) {
+        console.log(data, 'mock数据示例三')
+    }
+});
+
