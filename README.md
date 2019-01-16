@@ -4,19 +4,6 @@
 
 2、新建页面，需重新`npm start`才可以正常访问新建的页面。
 
-
-## 开始
-
-```bash
-$ git init
-$ git remote add -f origin git@192.168.2.107:sjfx/web-front.gitf 
-$ git config core.sparseCheckout true                  
-$ echo "cli/oldproject-easy-webpack" >> .git/info/sparse-checkout   
-$ git pull origin master                 
-```
-
-如果一切顺利，将会在文件夹中看到`cli/oldproject-easy-webpack`,其中`oldproject-easy-webpack`将会是要使用的脚手架
-
 ## 使用步骤
 
 1、 将`oldproject-easy-webpack`中所有文件及文件夹拷贝到项目根目录。
