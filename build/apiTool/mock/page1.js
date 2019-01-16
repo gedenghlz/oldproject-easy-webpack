@@ -2,7 +2,7 @@
  * 演示例子请勿删除 
  * */
 //当传入的数据不要经过处理，直接书写,mock会原样输出：
-page1.push({
+let page1=[{
 	url: '/news/test',
 	data: {
 		"key1": [1, 2, 3, 4],
@@ -10,7 +10,7 @@ page1.push({
 		"key3": '我是个数字',
 	},
 	method: 'get'
-})
+}]
 
 //mock返回的数据：
 /*
@@ -28,7 +28,7 @@ page1.push({
 
 
 //使用joinData通过传入mockNum来快速生成数据
-const page1 = [{
+page1.push({
 	url: '/news/index',
 	data: {
 		"key1": "string",
@@ -45,7 +45,7 @@ const page1 = [{
 
 	},
 	method: 'get'
-}]
+})
 
 
 // 返回结果：
