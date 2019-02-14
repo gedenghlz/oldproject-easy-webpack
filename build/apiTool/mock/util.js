@@ -25,54 +25,73 @@ const getData = function (curItem) {
 
 const getRadom = function (obj) {
     let data = {};
-    for (let key in obj) {
-        if (key !== 'mockNum') {
-            let object = obj[key];
-            let type = Object.prototype.toString.call(object)
-            if (type == '[object Object]') {
-                let num = object.mockNum;
-                if (num) {
-                    let arr = [];
-                    for (let i = 0; i < num; i++) {
-                        let curObject = {};
-                        for (let k in object) {
-                            if (k !== 'mockNum') {
-                                curObject[k] = getData(object[k])
+    let objType = Object.prototype.toString.call(obj);
+    if (objType == '[object Object]') {
+        for (let key in obj) {
+            if (key !== 'mockNum') {
+                let object = obj[key];
+                let type = Object.prototype.toString.call(object)
+                if (type == '[object Object]') {
+                    let num = object.mockNum;
+                    if (num) {
+                        let arr = [];
+                        for (let i = 0; i < num; i++) {
+                            let curObject = {};
+                            for (let k in object) {
+                                if (k !== 'mockNum') {
+                                    curObject[k] = getData(object[k])
+                                }
                             }
+                            arr.push(curObject)
                         }
-                        arr.push(curObject)
-                    }
-                    data[key] = arr;
-                } else {
-                    let curObject = {};
-
-                    for (let k in object) {
-                        curObject[k] = getData(object[k])
-                    }
-                    data[key] = curObject;
-                }
-
-            } else if (type == "[object Array]") {
-                for (let k = 0; k < object.length; k++) {
-                    let item = object[k]
-                    if (Object.prototype.toString.call(item) == '[object Object]') {
-                        let curItem = {};
-                        for (let key in item) {
-                            curItem[key] = getData(item[key])
-                        }
-                        object[k] = curItem;
+                        data[key] = arr;
                     } else {
-                        object[k] = getData(item)
+                        let curObject = {};
+
+                        for (let k in object) {
+                            curObject[k] = getData(object[k])
+                        }
+                        data[key] = curObject;
                     }
+
+                } else if (type == "[object Array]") {
+                    for (let k = 0; k < object.length; k++) {
+                        let item = object[k]
+                        if (Object.prototype.toString.call(item) == '[object Object]') {
+                            let curItem = {};
+                            for (let key in item) {
+                                curItem[key] = getData(item[key])
+                            }
+                            object[k] = curItem;
+                        } else {
+                            object[k] = getData(item)
+                        }
+                    }
+                    data[key] = object
+                } else {
+                    data[key] = getData(obj[key])
                 }
-
-
-                data[key] = object
-            } else {
-                data[key] = getData(obj[key])
             }
         }
+
+    } else if(objType == "[object Array]"){
+        for (let k = 0; k < obj.length; k++) {
+            let item = obj[k]
+            if (Object.prototype.toString.call(item) == '[object Object]') {
+                let curItem = {};
+                for (let key in item) {
+                    curItem[key] = getData(item[key])
+                }
+                obj[k] = curItem;
+            } else {
+                obj[k] = getData(item)
+            }
+        }
+        data = obj
+    }else{
+        data = obj
     }
+
     return data;
 }
 

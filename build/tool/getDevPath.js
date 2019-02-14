@@ -9,7 +9,7 @@ let devPaths = [];
 let distPaths = [];
 
 //解析需要遍历的文件夹
-let filePath = path.resolve(PATH.ROOT);
+let filePath = PATH.ROOT;
 //调用文件遍历方法
 fileDisplay(filePath);
 

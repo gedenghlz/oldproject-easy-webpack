@@ -1,10 +1,12 @@
 const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const EncodingPlugin = require('webpack-encoding-plugin');
 
 let webpackConfig = require('./webpack.config.base')
 const PATH = require('./filePath')
 const distPaths = require('./tool/getDevPath.js').distPaths;
+const configs = require('./config');
 
 distPaths.forEach(dir => {
     webpackConfig.plugins.unshift(
@@ -16,6 +18,7 @@ distPaths.forEach(dir => {
         })
     )
 })
+
 webpackConfig.plugins.unshift(
     new CleanWebpackPlugin([PATH.VENDOR], {
         root: PATH.PUBLICPATH,
@@ -24,6 +27,10 @@ webpackConfig.plugins.unshift(
         exclude: []
     }))
 
+
+if (configs.encodingConfig.encoding) {
+    webpackConfig.plugins.push(new EncodingPlugin(configs.encodingConfig))
+}
 
 webpackConfig.plugins.push(
     new webpack.LoaderOptionsPlugin({
@@ -44,17 +51,17 @@ webpackConfig.plugins.push(
             evaluate: true,
             if_return: true,
             join_vars: true,
-            properties:false
+            properties: false
         },
-        output:{
-            beautify:false,
-            quote_keys:true
+        output: {
+            beautify: false,
+            quote_keys: true
         },
-        mangle:{
-            screw_ie8:false
+        mangle: {
+            screw_ie8: false
         },
-        parallel:true,
-        cache:true
+        parallel: true,
+        cache: true
     })
 )
 

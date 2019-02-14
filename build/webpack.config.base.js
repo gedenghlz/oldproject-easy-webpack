@@ -4,12 +4,16 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path')
 const es3ifyPlugin = require('es3ify-webpack-plugin');
 const HappyPack = require('HappyPack');
+const HtmlStringReplace = require('html-string-replace-webpack-plugin');
 
-const PATH = require('./filePath')
+
+const PATH = require('./filePath');
 const {
     getEntriesAndOutputs,
-    html_plugins
+    html_plugins,
+    staticFilesPaths
 } = require('./tool/getFile')
+const configs = require('./config');
 
 const pathConfig = getEntriesAndOutputs();
 
@@ -46,7 +50,7 @@ let config = {
                 use: [{
                         loader: 'cache-loader', //减少编译时间
                         options: {
-                            cacheDirectory: path.resolve('build/','.cache')
+                            cacheDirectory: path.resolve('build/', '.cache')
                         }
                     },
                     {
@@ -76,6 +80,7 @@ let config = {
                 test: /\.(sass|scss|css$)$/,
                 loader: extractStyles.extract({
                     fallback: 'style-loader',
+                    publicPath: './',
                     use: [{
                             loader: 'css-loader',
                             options: {
@@ -148,15 +153,33 @@ let config = {
             name: ['vendor', 'manifest'],
             minChunks: Infinity,
             filename: 'vendor_dist/[name].[chunkhash:8].js'
-        }, ),
+        }),
 
         extractStyles,
-        new es3ifyPlugin()
-    ].concat(html_plugins())
+        new es3ifyPlugin(),
+        new CopyWebpackPlugin(staticFilesPaths.map(dir => {
+            return {
+                from: dir,
+                to: dir.replace('_entries', '_dist')
+            }
+        }))
+    ].concat(html_plugins()).concat([
+        new HtmlStringReplace({
+            enable: true,
+            patterns: configs.htmlReplaceStringConfig.map(item => {
+                return {
+                    match: item.match,
+                    replacement: function () {
+                        return item.value
+                    }
+                }
+            })
+
+        })
+    ])
 }
 
-
-
+configs.useanAbsolutePath && (config.output.publicPath = '/');
 
 
 module.exports = config

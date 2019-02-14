@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "clear && cross-env NODE_ENV=development  babel-node build/webpack.config.dev.js",
+    "start": "cross-env NODE_ENV=development  babel-node build/webpack.config.dev.js",
     "build": "cross-env NODE_ENV=production  webpack --config build/webpack.config.production.js --progress"
   },
   "author": "",
@@ -32,6 +32,7 @@
     "glob": "^7.1.2",
     "happypack": "^5.0.1",
     "html-loader": "^0.5.1",
+    "html-string-replace-webpack-plugin": "^1.0.5",
     "html-webpack-plugin": "^2.30.1",
     "image-loader": "0.0.1",
     "include-media": "^1.4.9",
@@ -48,6 +49,7 @@
     "watch": "^1.0.2",
     "webpack": "^3.5.3",
     "webpack-dev-server": "^2.7.1",
+    "webpack-encoding-plugin": "^0.2.1",
     "webpack-hot-middleware": "^2.18.2"
   },
   "dependencies": {

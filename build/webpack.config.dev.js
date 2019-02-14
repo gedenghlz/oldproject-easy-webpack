@@ -7,10 +7,11 @@ const notifier = require('node-notifier')
 
 
 const PATH = require('./filePath')
-const setting = require('./portConfig')
+const setting = require('./config').portConfig
 let webpackConfig = require('./webpack.config.base')
 const logger = require('./tool/logger')
 const PORT = setting.dev.port || '3000'
+const LOCALHOST = setting.dev.localhost || 'localhost'
 const proxyConfig = require('./apiTool/proxy.js')
 
 
@@ -39,7 +40,7 @@ const rennder = (PORT) => {
     server.listen(PORT, '', () => {
         logger.success('服务器启动成功！')
         logger.success('服务器IP：')
-        logger.success(`       http://${PATH.LOCALHOST}:${PORT}`)
+        logger.success(`       http://${LOCALHOST}:${PORT}`)
         logger.success(`       http://${PATH.LAN}:${PORT}`)
 
     })
@@ -50,15 +51,15 @@ portfinder.basePort = PORT;
 portfinder.getPortPromise()
     .then((port) => {
         webpackConfig.entry.vendor.unshift("webpack-dev-server/client?" +
-            `http://${PATH.LOCALHOST}:${port}`)
+            `http://${LOCALHOST}:${port}`)
         webpackConfig.plugins.push(
             new OpenBrowserPlugin({
-                url: `http://${PATH.LOCALHOST}:${port}/webpack-dev-server`
+                url: `http://${LOCALHOST}:${port}/webpack-dev-server`
             }),
             new FriendlyErrorsPlugin({
                 compilationSuccessInfo: {
                     messages: [
-                        `Your application is running here: http://${PATH.LOCALHOST}:${PORT}:${port}`
+                        `Your application is running here: http://${LOCALHOST}:${port}`
                     ]
                 },
                 onErrors: (severity, errors) => {
