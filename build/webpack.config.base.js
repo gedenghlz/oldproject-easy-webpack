@@ -2,7 +2,6 @@ const webpack = require('webpack')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path')
-const es3ifyPlugin = require('es3ify-webpack-plugin');
 const HappyPack = require('HappyPack');
 const HtmlStringReplace = require('html-string-replace-webpack-plugin');
 
@@ -135,8 +134,9 @@ let config = {
                 loader: 'babel-loader',
                 query: {
                     cacheDirectory: true,
-                    "presets": [
-                        "es2015",
+                    "presets": __DEV__ ? [
+                        "es2015"
+                    ] : ["es2015",
                         "stage-0"
                     ],
                     "plugins": [
@@ -154,9 +154,7 @@ let config = {
             minChunks: Infinity,
             filename: 'vendor_dist/[name].[chunkhash:8].js'
         }),
-
         extractStyles,
-        new es3ifyPlugin(),
         new CopyWebpackPlugin(staticFilesPaths.map(dir => {
             return {
                 from: dir,
@@ -180,6 +178,5 @@ let config = {
 }
 
 configs.useanAbsolutePath && (config.output.publicPath = '/');
-
 
 module.exports = config

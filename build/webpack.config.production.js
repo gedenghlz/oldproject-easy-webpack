@@ -2,6 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const EncodingPlugin = require('webpack-encoding-plugin');
+const es3ifyPlugin = require('es3ify-webpack-plugin');
 
 let webpackConfig = require('./webpack.config.base')
 const PATH = require('./filePath')
@@ -33,6 +34,7 @@ if (configs.encodingConfig.encoding) {
 }
 
 webpackConfig.plugins.push(
+    new es3ifyPlugin(),
     new webpack.LoaderOptionsPlugin({
         minimize: true,
         debug: false,
